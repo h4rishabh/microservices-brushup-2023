@@ -6,3 +6,5 @@ springboot-restful-webservices/mvnw
 *.cmd
 springboot-restful-webservices/.mvn/wrapper/maven-wrapper.jar
 *.jar
+*.jar
+springboot-rest-api/.mvn/wrapper/maven-wrapper.jar
