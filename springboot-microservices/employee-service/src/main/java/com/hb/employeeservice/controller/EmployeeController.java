@@ -1,5 +1,6 @@
 package com.hb.employeeservice.controller;
 
+import com.hb.employeeservice.dto.ApiResponseDTO;
 import com.hb.employeeservice.dto.EmployeeDTO;
 import com.hb.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,9 @@ public class EmployeeController {
 
     // Build REST API to Get Employee details
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable("id") Long employeeId){
+    public ResponseEntity<ApiResponseDTO> getEmployeeById(@PathVariable("id") Long employeeId){
 
-        EmployeeDTO existingUser = employeeService.findEmployeeById(employeeId);
+        ApiResponseDTO existingUser = employeeService.findEmployeeById(employeeId);
         return new ResponseEntity<>(existingUser, HttpStatus.CREATED);
     }
 

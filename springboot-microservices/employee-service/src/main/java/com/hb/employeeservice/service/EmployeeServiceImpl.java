@@ -1,9 +1,12 @@
 package com.hb.employeeservice.service;
 
+import com.hb.employeeservice.dto.ApiResponseDTO;
+import com.hb.employeeservice.dto.DepartmentDTO;
 import com.hb.employeeservice.dto.EmployeeDTO;
 import com.hb.employeeservice.entity.Employee;
 import com.hb.employeeservice.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,9 +43,14 @@ public class EmployeeServiceImpl implements  EmployeeService{
     }
 
     @Override
-    public EmployeeDTO findEmployeeById(Long id) {
+    public ApiResponseDTO findEmployeeById(Long id) {
 
         Employee employee = employeeRepository.findById(id).get();
+
+        ResponseEntity<DepartmentDTO> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/departments/" + employee.getDepartmentCode(),
+                DepartmentDTO.class);
+
+        DepartmentDTO departmentDTO = responseEntity.getBody();
 
         EmployeeDTO existingEmployee = new EmployeeDTO(employee.getId(),
                 employee.getFirstName(),
@@ -51,8 +59,12 @@ public class EmployeeServiceImpl implements  EmployeeService{
                 employee.getDepartmentCode()
         );
 
+        ApiResponseDTO apiResponseDTO = new ApiResponseDTO();
+        apiResponseDTO.setEmployeeDTO(existingEmployee);
+        apiResponseDTO.setDepartmentDTO(departmentDTO);
 
-        return existingEmployee;
+
+        return apiResponseDTO;
     }
 
 }
