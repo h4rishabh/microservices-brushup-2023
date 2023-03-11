@@ -117,3 +117,7 @@ springboot-microservices/department-service/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/employee-service/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/department-service/.mvn/*
 springboot-microservices/employee-service/.mvn/*
+springboot-microservices/service-registry/.mvn/wrapper/maven-wrapper.properties
+springboot-microservices/service-registry/mvnw
+springboot-microservices/service-registry/.mvn/wrapper/maven-wrapper.properties
+springboot-microservices/service-registry/.mvn/wrapper/maven-wrapper.jar
