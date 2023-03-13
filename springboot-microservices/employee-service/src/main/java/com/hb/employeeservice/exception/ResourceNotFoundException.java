@@ -1,4 +1,4 @@
-package com.hb.springboot.exception;
+package com.hb.employeeservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,7 +11,7 @@ public class ResourceNotFoundException extends RuntimeException {
 	private String fieldValue;
 
 	public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue) {
-		super(String.format("%s is not found for %s : '%s'", resourceName, fieldName, fieldValue));
+		super(String.format("%s is not found in %s : '%s'", resourceName, fieldName, fieldValue));
 		this.resourceName = resourceName;
 		this.fieldName = fieldName;
 		this.fieldValue = fieldValue;

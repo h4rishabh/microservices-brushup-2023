@@ -4,6 +4,9 @@ import com.hb.employeeservice.dto.ApiResponseDTO;
 import com.hb.employeeservice.dto.DepartmentDTO;
 import com.hb.employeeservice.dto.EmployeeDTO;
 import com.hb.employeeservice.entity.Employee;
+import com.hb.employeeservice.exception.EmailAlreadyExistException;
+import com.hb.employeeservice.exception.ResourceNotFoundException;
+import com.hb.employeeservice.mapper.EmployeeMapper;
 import com.hb.employeeservice.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -26,23 +30,22 @@ public class EmployeeServiceImpl implements  EmployeeService{
 
     @Override
     public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee(
-                employeeDTO.getId(),
-                employeeDTO.getFirstName(),
-                employeeDTO.getLastName(),
-                employeeDTO.getEmail(),
-                employeeDTO.getDepartmentCode()
-        );
 
+        Optional<Employee> existingUser = employeeRepository.findEmployeeByEmail(employeeDTO.getEmail());
+
+        if(existingUser.isPresent()){
+            throw new EmailAlreadyExistException("Email already exist for Employee");
+        }
+
+        Optional<DepartmentDTO> departmentDTO = apiClient.findDepartmentByCode(employeeDTO.getDepartmentCode());
+
+        if(!departmentDTO.isPresent()){
+            throw new ResourceNotFoundException("Department", "departmentCode", employeeDTO.getDepartmentCode());
+        }
+
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDTO);
         Employee savedEmployee = employeeRepository.save(employee);
-
-        EmployeeDTO saveEmployeeDTO = new EmployeeDTO(
-                savedEmployee.getId(),
-                savedEmployee.getFirstName(),
-                savedEmployee.getLastName(),
-                savedEmployee.getEmail(),
-                savedEmployee.getDepartmentCode()
-        );
+        EmployeeDTO saveEmployeeDTO = EmployeeMapper.mapToEmployeeDTO(savedEmployee);
 
         return saveEmployeeDTO;
     }
@@ -50,7 +53,9 @@ public class EmployeeServiceImpl implements  EmployeeService{
     @Override
     public ApiResponseDTO findEmployeeById(Long id) {
 
-        Employee employee = employeeRepository.findById(id).get();
+        Employee employee = employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "id", String.valueOf(id))
+        );
 
 //        ResponseEntity<DepartmentDTO> responseEntity = restTemplate.getForEntity("http://localhost:8080/api/departments/" + employee.getDepartmentCode(),
 //                DepartmentDTO.class);
@@ -63,19 +68,17 @@ public class EmployeeServiceImpl implements  EmployeeService{
 //                .bodyToMono(DepartmentDTO.class)
 //                .block();
 
-        DepartmentDTO departmentDTO = apiClient.findDepartmentByCode(employee.getDepartmentCode());
+        Optional<DepartmentDTO> departmentDTO = apiClient.findDepartmentByCode(employee.getDepartmentCode());
 
-        EmployeeDTO existingEmployee = new EmployeeDTO(employee.getId(),
-                employee.getFirstName(),
-                employee.getLastName(),
-                employee.getEmail(),
-                employee.getDepartmentCode()
-        );
+        if(!departmentDTO.isPresent()){
+            throw new ResourceNotFoundException("Department", "departmentCode", employee.getDepartmentCode());
+        }
+
+        EmployeeDTO existingEmployee = EmployeeMapper.mapToEmployeeDTO(employee);
 
         ApiResponseDTO apiResponseDTO = new ApiResponseDTO();
         apiResponseDTO.setEmployeeDTO(existingEmployee);
-        apiResponseDTO.setDepartmentDTO(departmentDTO);
-
+        apiResponseDTO.setDepartmentDTO(departmentDTO.get());
 
         return apiResponseDTO;
     }
