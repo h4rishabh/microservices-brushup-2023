@@ -124,3 +124,7 @@ springboot-microservices/service-registry/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/api-gateway/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/api-gateway/.mvn/wrapper/maven-wrapper.properties
 springboot-microservices/api-gateway/mvnw
+springboot-kafka/.mvn/wrapper/maven-wrapper.jar
+springboot-kafka/.mvn/wrapper/maven-wrapper.properties
+springboot-kafka/.mvn/wrapper/maven-wrapper.jar
+springboot-kafka/mvnw
