@@ -8,6 +8,7 @@ import com.hb.employeeservice.exception.EmailAlreadyExistException;
 import com.hb.employeeservice.exception.ResourceNotFoundException;
 import com.hb.employeeservice.mapper.EmployeeMapper;
 import com.hb.employeeservice.repository.EmployeeRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EmployeeServiceImpl implements  EmployeeService{
+public class  EmployeeServiceImpl implements  EmployeeService{
 
     private EmployeeRepository employeeRepository;
     //private RestTemplate restTemplate;
-    //private  WebClient webClient;
+    private  WebClient webClient;
 
     private APIClient apiClient;
 
@@ -51,6 +52,7 @@ public class EmployeeServiceImpl implements  EmployeeService{
     }
 
     @Override
+    @CircuitBreaker(name="${spring.application.name}", fallbackMethod = "getDefaultDepartment")
     public ApiResponseDTO findEmployeeById(Long id) {
 
         Employee employee = employeeRepository.findById(id).orElseThrow(
@@ -62,23 +64,24 @@ public class EmployeeServiceImpl implements  EmployeeService{
 //
 //        DepartmentDTO departmentDTO = responseEntity.getBody();
 
-//        DepartmentDTO departmentDTO = webClient.get()
-//                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
-//                .retrieve()
-//                .bodyToMono(DepartmentDTO.class)
-//                .block();
+        DepartmentDTO departmentDTO = webClient.get()
+                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
+                .retrieve()
+                .bodyToMono(DepartmentDTO.class)
+                .block();
 
-        Optional<DepartmentDTO> departmentDTO = apiClient.findDepartmentByCode(employee.getDepartmentCode());
+        //Optional<DepartmentDTO> departmentDTO = apiClient.findDepartmentByCode(employee.getDepartmentCode());
 
-        if(!departmentDTO.isPresent()){
-            throw new ResourceNotFoundException("Department", "departmentCode", employee.getDepartmentCode());
-        }
+//        if(!departmentDTO.isPresent()){
+//            throw new ResourceNotFoundException("Department", "departmentCode", employee.getDepartmentCode());
+//        }
 
         EmployeeDTO existingEmployee = EmployeeMapper.mapToEmployeeDTO(employee);
 
         ApiResponseDTO apiResponseDTO = new ApiResponseDTO();
         apiResponseDTO.setEmployeeDTO(existingEmployee);
-        apiResponseDTO.setDepartmentDTO(departmentDTO.get());
+       // apiResponseDTO.setDepartmentDTO(departmentDTO.get());
+        apiResponseDTO.setDepartmentDTO(departmentDTO);
 
         return apiResponseDTO;
     }
