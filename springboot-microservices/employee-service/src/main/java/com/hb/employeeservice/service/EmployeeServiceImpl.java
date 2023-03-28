@@ -10,12 +10,9 @@ import com.hb.employeeservice.mapper.EmployeeMapper;
 import com.hb.employeeservice.repository.EmployeeRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -86,11 +83,11 @@ public class  EmployeeServiceImpl implements  EmployeeService{
         return apiResponseDTO;
     }
 
-    public ApiResponseDTO getDefaultDepartment(Long id) {
+    public ApiResponseDTO getDefaultDepartment(Long employeeId, Exception exception) {
 
 
-        Employee employee = employeeRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Employee", "id", String.valueOf(id))
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "id", String.valueOf(employeeId))
         );
 
         // Creating default value of Department
