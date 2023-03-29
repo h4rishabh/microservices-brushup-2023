@@ -13,15 +13,12 @@ Distributed systems can be unreliable. Requests might encounter timeouts or fail
 ## Spring Boot Config
 
 The following starters are available with the Spring Cloud BOM
-
 * Resilience4J - `org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j`
-
 * Reactive Resilience4J - `org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j`
-
 * Spring Retry - `org.springframework.cloud:spring-cloud-starter-circuitbreaker-spring-retry`
 
 
-### Steps:
+### Steps To add Resilience4J in Project :
 * Add 3 dependency in your project :
 ```
     <dependency>
@@ -40,11 +37,14 @@ The following starters are available with the Spring Cloud BOM
     </dependency> 
     
 ```
-
-* Using `@CircuitBreaker` annotation to a method 
-
+* Using `@CircuitBreaker` annotation to a method
 * Fallback method implementation
-
-* Add Circuit Breaker Configuration in `application.properties` 
-
+* Add Circuit Breaker Configuration in `application.properties`
 * Restart `employee-service` and test
+
+### Steps To add Retry in Project : 
+
+* Using `@Retry` annotation to a method
+* Fallback method implementation
+* Add Retry configuration in `application.properties` file
+* Restart employee-service 
