@@ -1,5 +1,6 @@
-package com.hb.organizationservice.dto;
+package com.hb.organizationservice.mapper;
 
+import com.hb.organizationservice.dto.OrganizationDTO;
 import com.hb.organizationservice.entity.Organization;
 
 public class OrganizationMapper {
@@ -7,7 +8,7 @@ public class OrganizationMapper {
         Organization organization = new Organization();
         organization.setOrganizationCode(organizationDTO.getOrganizationCode());
         organization.setOrganizationDescription(organizationDTO.getOrganizationDescription());
-        organization.setOrganizationName(organization.getOrganizationName());
+        organization.setOrganizationName(organizationDTO.getOrganizationName());
 
         return organization;
     }
