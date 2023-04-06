@@ -7,11 +7,11 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class OrganizationDTO {
+@AllArgsConstructor
+public class OrganizationDto {
     private Long id;
     private String organizationName;
     private String organizationDescription;

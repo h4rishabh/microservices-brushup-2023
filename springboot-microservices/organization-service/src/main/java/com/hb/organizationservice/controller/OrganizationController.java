@@ -1,31 +1,31 @@
 package com.hb.organizationservice.controller;
 
-import com.hb.organizationservice.dto.OrganizationDTO;
-import com.hb.organizationservice.service.OrganizationService;
-import jakarta.websocket.server.PathParam;
+import com.hb.organizationservice.dto.OrganizationDto;
 import lombok.AllArgsConstructor;
+import com.hb.organizationservice.service.OrganizationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/organizations")
+@RequestMapping("api/organizations")
 @AllArgsConstructor
 public class OrganizationController {
+
     private OrganizationService organizationService;
 
-    // API to Save Organization
+    // Build Save Organization REST API
     @PostMapping
-    public ResponseEntity<OrganizationDTO> saveOrganization(@RequestBody OrganizationDTO organizationDTO){
-        OrganizationDTO savedOrganization = organizationService.saveOrganization(organizationDTO);
+    public ResponseEntity<OrganizationDto> saveOrganization(@RequestBody OrganizationDto organizationDto){
+        OrganizationDto savedOrganization = organizationService.saveOrganization(organizationDto);
         return new ResponseEntity<>(savedOrganization, HttpStatus.CREATED);
     }
 
-    // API to get Organization Details
-    @GetMapping("{organization-code}")
-    public ResponseEntity<OrganizationDTO> findOrganization(@PathVariable("organization-code") String organizationCode){
-        OrganizationDTO organizationDto = organizationService.getOrganizationByCode(organizationCode);
-        return new ResponseEntity<>(organizationDto, HttpStatus.OK);
+    // Build Get Organization by Code REST API
+    @GetMapping("{code}")
+    public ResponseEntity<OrganizationDto> getOrganization(@PathVariable("code") String organizationCode){
+        OrganizationDto organizationDto = organizationService.getOrganizationByCode(organizationCode);
+        return ResponseEntity.ok(organizationDto);
     }
 
 }
