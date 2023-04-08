@@ -13,3 +13,12 @@ This folder contains multiple Microservices
 
 [organization-service](organization-service)
 
+## Documentation
+
+[SpringDoc Open API](SpringDoc_OpenAPI_README.md)
+
+## How to add ...?
+
+[Config Server](config-server%2FReadme.md)
+
+[Circuit Breaker](employee-service%2FCircuitBreaker_README.md)
