@@ -1,9 +1,9 @@
 package com.hb.organizationservice.service;
 
-import com.hb.organizationservice.dto.OrganizationDto;
+import com.hb.organizationservice.dto.OrganizationDTO;
 
 public interface OrganizationService {
-    OrganizationDto saveOrganization(OrganizationDto organizationDto);
+    OrganizationDTO saveOrganization(OrganizationDTO organizationDto);
 
-    OrganizationDto getOrganizationByCode(String organizationCode);
+    OrganizationDTO getOrganizationByCode(String organizationCode);
 }

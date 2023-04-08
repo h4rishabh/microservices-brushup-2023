@@ -1,6 +1,6 @@
 package com.hb.organizationservice.service.impl;
 
-import com.hb.organizationservice.dto.OrganizationDto;
+import com.hb.organizationservice.dto.OrganizationDTO;
 import com.hb.organizationservice.entity.Organization;
 import com.hb.organizationservice.mapper.OrganizationMapper;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private OrganizationRepository organizationRepository;
 
     @Override
-    public OrganizationDto saveOrganization(OrganizationDto organizationDto) {
+    public OrganizationDTO saveOrganization(OrganizationDTO organizationDto) {
 
         // convert OrganizationDto into Organization jpa entity
         Organization organization = OrganizationMapper.mapToOrganization(organizationDto);
@@ -26,7 +26,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationDto getOrganizationByCode(String organizationCode) {
+    public OrganizationDTO getOrganizationByCode(String organizationCode) {
         Organization organization = organizationRepository.findByOrganizationCode(organizationCode);
         return OrganizationMapper.mapToOrganizationDto(organization);
     }

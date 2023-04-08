@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Schema(
         description = "DepartmentDTO Models Information"
-
 )
 @Getter
 @Setter

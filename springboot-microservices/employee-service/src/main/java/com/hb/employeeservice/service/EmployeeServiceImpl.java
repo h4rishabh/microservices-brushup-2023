@@ -3,13 +3,12 @@ package com.hb.employeeservice.service;
 import com.hb.employeeservice.dto.ApiResponseDTO;
 import com.hb.employeeservice.dto.DepartmentDTO;
 import com.hb.employeeservice.dto.EmployeeDTO;
-import com.hb.employeeservice.dto.OrganizationDto;
+import com.hb.employeeservice.dto.OrganizationDTO;
 import com.hb.employeeservice.entity.Employee;
 import com.hb.employeeservice.exception.EmailAlreadyExistException;
 import com.hb.employeeservice.exception.ResourceNotFoundException;
 import com.hb.employeeservice.mapper.EmployeeMapper;
 import com.hb.employeeservice.repository.EmployeeRepository;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -81,10 +80,10 @@ public class  EmployeeServiceImpl implements  EmployeeService{
 //            throw new ResourceNotFoundException("Department", "departmentCode", employee.getDepartmentCode());
 //        }
 
-        OrganizationDto organizationDto = webClient.get()
+        OrganizationDTO organizationDto = webClient.get()
                 .uri("http://localhost:8083/api/organizations/"+employee.getOrganizationCode())
                 .retrieve()
-                .bodyToMono(OrganizationDto.class)
+                .bodyToMono(OrganizationDTO.class)
                 .block();
 
 
