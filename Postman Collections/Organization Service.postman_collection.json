@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "85611fcd-41b8-4777-8c62-b0c80def243b",
-		"name": "Department Service",
+		"_postman_id": "16c7d049-1ff0-442c-9c4a-263b370fbec6",
+		"name": "Organization Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26186361"
 	},
 	"item": [
 		{
-			"name": "Get Department Detail",
+			"name": "Get Organization Detail",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -24,23 +24,23 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/departments/CSE001",
+					"raw": "http://localhost:8083/api/organizations/ABC_ORG",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8083",
 					"path": [
 						"api",
-						"departments",
-						"CSE001"
+						"organizations",
+						"ABC_ORG"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get Message",
+			"name": "Get All Organization",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -57,27 +57,28 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/message",
+					"raw": "http://localhost:8081/api/employee",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
-						"message"
+						"api",
+						"employee"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get message - Refresh",
+			"name": "Create Organization",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Shubh\",\r\n    \"lastName\": \"Jaiswal\",\r\n    \"userEmail\": \"Shubh@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"organizationName\": \"Citi\",\r\n    \"organizationDescription\": \"Citi Private Bank\",\r\n    \"organizationCode\": \"ABC_ORG\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,83 +86,22 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/actuator/refresh",
+					"raw": "http://localhost:8083/api/organizations",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
-					"path": [
-						"actuator",
-						"refresh"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get All Department",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Shubh\",\r\n    \"lastName\": \"Jaiswal\",\r\n    \"userEmail\": \"Shubh@gmail.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/users",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
+					"port": "8083",
 					"path": [
 						"api",
-						"users"
+						"organizations"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Create Department",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"departmentName\": \"Tom\",\r\n    \"departmentDescription\": \"Cruise\",\r\n    \"departmentCode\": \"tom@gmail.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/departments",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"departments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Department",
+			"name": "Update Organization",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -175,12 +115,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/users/9",
+					"raw": "http://localhost:8081/api/users/9",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"users",
@@ -191,7 +131,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete Department",
+			"name": "Delete Organization",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -205,12 +145,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/users/10",
+					"raw": "http://localhost:8081/api/users/10",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
 						"api",
 						"users",

@@ -78,7 +78,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"Hrishabh\",\r\n    \"lastName\": \"Kumar\",\r\n    \"email\": \"hb@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"firstName\": \"Atul\",\r\n    \"lastName\": \"Raj\",\r\n    \"email\": \"atul@gmail.com\",\r\n    \"departmentCode\": \"sdsa\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

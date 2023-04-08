@@ -40,6 +40,40 @@
 			"response": []
 		},
 		{
+			"name": "Get Department Detail - RoutePredicate",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9191/department-service/api/departments/DEP001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9191",
+					"path": [
+						"department-service",
+						"api",
+						"departments",
+						"DEP001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create Department",
 			"request": {
 				"method": "POST",
@@ -86,16 +120,49 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/employee/4",
+					"raw": "http://localhost:9191/api/employee/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "9191",
 					"path": [
 						"api",
 						"employee",
-						"4"
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee Detail - RoutePredicate",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Shubh\",\r\n    \"lastName\": \"Jaiswal\",\r\n    \"userEmail\": \"Shubh@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9191/api/employee/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9191",
+					"path": [
+						"api",
+						"employee",
+						"6"
 					]
 				}
 			},
