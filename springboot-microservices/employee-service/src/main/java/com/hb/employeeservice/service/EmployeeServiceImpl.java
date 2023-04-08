@@ -3,6 +3,7 @@ package com.hb.employeeservice.service;
 import com.hb.employeeservice.dto.ApiResponseDTO;
 import com.hb.employeeservice.dto.DepartmentDTO;
 import com.hb.employeeservice.dto.EmployeeDTO;
+import com.hb.employeeservice.dto.OrganizationDto;
 import com.hb.employeeservice.entity.Employee;
 import com.hb.employeeservice.exception.EmailAlreadyExistException;
 import com.hb.employeeservice.exception.ResourceNotFoundException;
@@ -75,16 +76,25 @@ public class  EmployeeServiceImpl implements  EmployeeService{
 
         //Optional<DepartmentDTO> departmentDTO = apiClient.findDepartmentByCode(employee.getDepartmentCode());
 
+
 //        if(!departmentDTO.isPresent()){
 //            throw new ResourceNotFoundException("Department", "departmentCode", employee.getDepartmentCode());
 //        }
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organizations/"+employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
+
         EmployeeDTO existingEmployee = EmployeeMapper.mapToEmployeeDTO(employee);
 
         ApiResponseDTO apiResponseDTO = new ApiResponseDTO();
-        apiResponseDTO.setEmployeeDTO(existingEmployee);
+        apiResponseDTO.setEmployee(existingEmployee);
        // apiResponseDTO.setDepartmentDTO(departmentDTO.get());
-        apiResponseDTO.setDepartmentDTO(departmentDTO);
+        apiResponseDTO.setDepartment(departmentDTO);
+        apiResponseDTO.setOrganization(organizationDto);
 
         return apiResponseDTO;
     }
@@ -106,9 +116,9 @@ public class  EmployeeServiceImpl implements  EmployeeService{
         EmployeeDTO existingEmployee = EmployeeMapper.mapToEmployeeDTO(employee);
 
         ApiResponseDTO apiResponseDTO = new ApiResponseDTO();
-        apiResponseDTO.setEmployeeDTO(existingEmployee);
+        apiResponseDTO.setEmployee(existingEmployee);
         // apiResponseDTO.setDepartmentDTO(departmentDTO.get());
-        apiResponseDTO.setDepartmentDTO(departmentDTO);
+        apiResponseDTO.setDepartment(departmentDTO);
 
         return apiResponseDTO;
     }

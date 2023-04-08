@@ -25,4 +25,5 @@ public class EmployeeDTO {
     @NotEmpty(message = "Field: departmentCode cannot be empty. ")
     @NotNull
     private String departmentCode;
+    private String organizationCode;
 }
