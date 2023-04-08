@@ -29,7 +29,7 @@ public class DepartmentController {
     )
     @ApiResponse(
             responseCode = "201",
-            description = "HTTP Status 202 Created"
+            description = "HTTP Status 201 Created"
     )
     // Build REST API to create Department
     @PostMapping

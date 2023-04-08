@@ -1,4 +1,4 @@
-package com.hb.organizationservice.dto;
+package com.hb.employeeservice.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
