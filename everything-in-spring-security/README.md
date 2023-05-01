@@ -78,13 +78,20 @@ Cross origin Request Sharing
 
 ### JWT (Json Web Token)
 * Open, industry standard for representing claims security between two parties
-* * Can contain User Details and Authorizations 
+  * Can contain User Details and Authorizations 
 
 ### What does JWT contains?
+
+There are three things im a single JWT token
 * Header
+* Payload
+* Signature
+
+
+* `Header`
   * Type: JWT
   * Hashing Algorithm: HS512
-* Payload
+* `Payload`
   * Standard Attribute
     * iss : The issuer
     * sub: the subject
@@ -93,14 +100,48 @@ Cross origin Request Sharing
     * iat: when was token issued?
   * Custom Attribute
     * yourattr1: Your custom attribute 1 
-* Signature:
+* `Signature:`
   * Include a secret
 
-There are three things im a single JWT token
-* Header
-* Payload
-* Signature
 
-* Symmetric Key Encryption:
+* `Symmetric Key Encryption:`
   * It uses same Key for encryption and decryption.
+  * Key Factor 1: Choose the right encryption key
+  * Key Factor 2: How do we secure the encryption key?
+  * Key Factor 3: How do we share the encryption key?
 
+* `Asymmetric Key Encryption:`
+  * Two Keys: public key & private key
+  * Share public key with everyone, keep the private key with you.
+  * Even if you have public key, you wouldn't be able to know private key.
+
+
+###  High level JWT flow:
+* `1: Create JWT`
+  * Needs Encoding
+    * User Credentials
+    * User Data(payload)
+    * RSA key pair
+  * We will create a JWT Resource for creating JWT later
+* `2: Send JWT as part of request header`
+  * Authorization Header
+  * Bearer Token
+  * Authorization: Bearer ${JWT_TOKEN}
+* `3: JWT is Verified`
+  * Needs decoding
+  * RSA key pair(public key)
+
+#### Getting Started with JWT Security Configuration:
+* JWT Authentication using Spring boot's OAuth2 Resource Server
+  * `1: Create Key Pair`
+    * We can use java.security.KeyPairGenerator
+    * We can use openssl as well 
+  * `2: Create RSA Key object using key pair`
+    * com.nimbusds.jose.jwk.RSAKey
+  * `3: Create JWKSource(JSON Web key source)`
+    * Create JWKSet (a new JSON web key set) with the RSA key
+    * Create JWKSource using the JWKSet
+  * `4: Use RSA public key for decoding`
+    * NimbusJwtDecoder.withPublicKey(rsaKey().toRSAPublicKey()).build()
+  * `5: User JWKSource for Encoding`
+    * return new NimbusJwtEncoder(jwkSource())
