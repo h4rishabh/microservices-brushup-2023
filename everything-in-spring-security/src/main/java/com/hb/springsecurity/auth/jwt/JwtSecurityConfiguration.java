@@ -20,7 +20,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -72,7 +74,7 @@ public class JwtSecurityConfiguration {
     @Bean
     public UserDetailsService userDetailService(DataSource dataSource) {
 
-        var user = User.withUsername("in28minutes")
+        var user = User.withUsername("hrishabh")
                 .password("dummy")
                 .passwordEncoder(str -> passwordEncoder().encode(str))
                 .roles("USER")
@@ -134,6 +136,11 @@ public class JwtSecurityConfiguration {
 //                return jwkSelector.select(jwkSet);
 //            }
 //        };
+    }
+
+    @Bean
+    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource){
+        return new NimbusJwtEncoder(jwkSource);
     }
 
 }
