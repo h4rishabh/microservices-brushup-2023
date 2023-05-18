@@ -147,3 +147,7 @@ springboot-microservices/organization-service/.DS_Store
 springboot-microservices/organization-service/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/organization-service/.mvn/wrapper/maven-wrapper.jar
 springboot-microservices/organization-service/mvnw
+springboot-test/.mvn/wrapper/maven-wrapper.properties
+springboot-test/.mvn/wrapper/maven-wrapper.jar
+springboot-test/.mvn/wrapper/maven-wrapper.jar
+springboot-test/mvnw
