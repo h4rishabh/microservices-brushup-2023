@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 public class EmployeeRepositoryTests {
@@ -119,5 +120,145 @@ public class EmployeeRepositoryTests {
         // then - verify the output
         assertThat(employeeFromDB).isNotNull();
         assertThat(employeeFromDB.getEmail()).isEqualTo(employee.getEmail());
+    }
+
+    // JUnit Test for update employee operation
+    @DisplayName("JUnit Test for update employee operation")
+    @Test
+    public void givenEmployeeObject_whenUpdateEmployeeDetails_thenReturnUpdatedEmployee(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        // when - action or behaviour that we are going to test
+        Employee savedEmployee = employeeRepository.findById(employee.getId()).get();
+        savedEmployee.setEmail("john@wick.com");
+        savedEmployee.setLastName("Wick");
+
+        Employee updatedEmployee = employeeRepository.save(savedEmployee);
+
+        // then - verify the output
+        assertThat(updatedEmployee.getEmail()).isEqualTo("john@wick.com");
+        assertThat(updatedEmployee.getLastName()).isEqualTo("Wick");
+    }
+
+    // JUnit Test for delete employee operation
+    @DisplayName("JUnit Test for delete employee operation")
+    @Test
+    public void givenEmployeeObject_whenDelete_thenRemoveEmployeeObject(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        // when - action or behaviour that we are going to test
+        employeeRepository.delete(employee);
+        Optional<Employee> employeeOptional = employeeRepository.findById(employee.getId());
+
+        // then - verify the output
+        assertThat(employeeOptional).isEmpty();
+    }
+
+    // JUnit Test for custom query using JPQL with index
+    @DisplayName("JUnit Test for custom query using JPQL with index")
+    @Test
+    public void givenFirstNameAndLastName_whenFindByJPQL_thenReturnsEmployeeObject(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+        String firstName = "John";
+        String lastName = "Doe";
+
+        // when - action or behaviour that we are going to test
+        Employee savedEmployee = employeeRepository.findByJPQL(firstName, lastName);
+
+        // then - verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
+
+    // JUnit Test for custom query using JPQL with named param
+    @DisplayName("JUnit Test for custom query using JPQL with named param")
+    @Test
+    public void givenFirstNameAndLastName_whenFindByJPQLWithNamedParam_thenReturnsEmployeeObject(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+        String firstName = "John";
+        String lastName = "Doe";
+
+        // when - action or behaviour that we are going to test
+        Employee savedEmployee = employeeRepository.findByJPQLWithNamedParam(firstName, lastName);
+
+        // then - verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
+
+    // JUnit Test for custom query using native SQL with index param
+    @DisplayName("JUnit Test for custom query using native SQL with index param")
+    @Test
+    public void givenFirstNameAndLastName_whenFindByNativeSQL_thenReturnsEmployeeObject(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+        //String firstName = "John";
+        //String lastName = "Doe";
+
+        // when - action or behaviour that we are going to test
+        Employee savedEmployee = employeeRepository.findEmployeeByNativeSQL(employee.getFirstName(), employee.getLastName());
+
+        // then - verify the output
+        assertThat(savedEmployee).isNotNull();
+    }
+
+    // JUnit Test for custom query using native SQL with named param
+    @DisplayName("JUnit Test for custom query using native SQL with named param")
+    @Test
+    public void givenFirstNameAndLastName_whenFindByNativeSQLWithNamedParam_thenReturnsEmployeeObject(){
+
+        // given - pre-condition or setup
+        Employee employee = Employee.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("jd@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+        //String firstName = "John";
+        //String lastName = "Doe";
+
+        // when - action or behaviour that we are going to test
+        Employee savedEmployee = employeeRepository.findEmployeeByNativeSQLWithNamedParam(employee.getFirstName(), employee.getLastName());
+
+        // then - verify the output
+        assertThat(savedEmployee).isNotNull();
     }
 }
